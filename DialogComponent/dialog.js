@@ -20,15 +20,18 @@ export default class Dialog extends EventTarget{
 
         this.addEventListener('success', this.opts.success) //自定义事件
         this.addEvent()
+
+
+
     }
     createElement() {
         const divEles = document.createElement('div')
         divEles.innerHTML = `<div class="k-dialog">
             <div class="k-head">
-                <span>我是头部</span>
+                <span>${this.opts.title}</span>
             </div>
             <div class="k-body">
-                <span>我是内容</span>
+                <span>${this.opts.content}</span>
             </div>
             <div class="k-footer">
                 <span class="k-cancel">取消</span>
@@ -53,8 +56,7 @@ export default class Dialog extends EventTarget{
                     this.opts.cancel()
                     break;
                 case 'k-primary':
-                    const success = new CustomEvent('success') // 自定义事件，继承EventTarget
-                    this.dispatchEvent(success) //自定义事件
+                    this.sure()
                     this.close()
                    // this.opts.success()
                     break;
@@ -63,10 +65,36 @@ export default class Dialog extends EventTarget{
             }
         })
     }
+
+    sure(value) {
+        const success = new CustomEvent('success',{detail:value}) // 自定义事件，继承EventTarget
+        this.dispatchEvent(success) //自定义事件
+    }
     open() {
         this.divEles.style.display = 'block'
     }
     close() {
         this.divEles.style.display = 'none'
+    }
+}
+
+
+
+
+
+
+export class InputDialog extends Dialog {
+    constructor(options) {
+        super(options)
+        this.createInput()
+    }
+    createInput() {
+        const myInput = document.createElement('input')
+        myInput.classList.add('k-input')
+        this.myInput = myInput
+         this.divEles.querySelector('.k-body').appendChild(myInput)
+    }
+    sure() {
+        super.sure(this.myInput.value)
     }
 }

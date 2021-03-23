@@ -7,14 +7,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <style>
+        /* html,
+        body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+        } */
+
         .k-dialog {
             position: fixed;
             top: 30%;
             left: 40%;
             width: 250px;
+            opacity: 1;
+            z-index: 999;
             height: 200px;
-            background: #eee;
+            /* // background: #eee; */
             padding: 20px;
+            border: 1px solid #aaa;
         }
 
         .k-head {
@@ -49,6 +60,7 @@
 
 <body>
     <button>按钮</button>
+    <button class="button">输入框按钮</button>
     <!-- <div class="k-dialog">
         <div class="k-head">
             <span>我是头部</span>
@@ -62,21 +74,39 @@
         </div>
     </div> -->
     <script type="module">
-        import Dialog from './dialog.js'
+        import Dialog, { InputDialog } from './dialog.js'
         const dialog = new Dialog({
-            title: '我是标题111',
-            content: '我是内容2222',
+            title: '我是标题',
+            content: '我是内容',
             isCancel: true,
-            success() {
-                console.log('点击了确定')
+            success(e) {
+                console.log('点击了确定', e)
             },
             cancel() {
                 console.log('点击了取消')
             }
         })
+
+        const inputDialog = new InputDialog({
+            title: '我是标题111',
+            content: '我是内容2222',
+            isCancel: true,
+            success(e) {
+                console.log('点击了确定1111111111', e.detail)
+            },
+            cancel() {
+                console.log('点击了取消2222222')
+            }
+        })
         const btn = document.querySelector('button')
         btn.onclick = function () {
             dialog.open()
+        }
+
+
+        const btn1 = document.querySelector('.button')
+        btn1.onclick = function () {
+            inputDialog.open()
         }
     </script>
 </body>
