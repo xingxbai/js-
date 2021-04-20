@@ -28,8 +28,8 @@ import ElementTest from '@/components/form2/ElementTest.vue';
 import KInput from '@/components/form2/KInput.vue';
 import KFormItem from '@/components/form2/KFormItem.vue';
 import KForm from '@/components/form2/KForm.vue';
-// import create from '@/utils/create';
-// import Notice from '@/components/Notice.vue';
+import create from '@/utils/create2';
+import Notice from '@/components/Notice.vue';
 
 export default {
     components: {
@@ -57,11 +57,11 @@ export default {
                 console.log('rd: login -> isValid', isValid);
                 // this.$notice({})
                 // 创建notice实例
-                // create(Notice, {
-                //     title: '村长喊你来搬砖',
-                //     message: isValid ? '请求登录' : '校验失败',
-                //     duration: 3000
-                // }).show();
+                create(Notice, {
+                    title: '村长喊你来搬砖',
+                    message: isValid ? '请求登录' : '校验失败',
+                    duration: 3000
+                }).show();
                 // if (isValid) {
                 //   // 合法
                 //   console.log("request login");

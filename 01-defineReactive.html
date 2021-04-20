@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app"></div>
+    <script>
+        function render(date) {
+            document.querySelector("#app").innerHTML = date
+        }
+
+        function observe(obj) {
+            if (typeof obj === 'object' && obj != null) {
+                Object.keys(obj).forEach(key => {
+                    defineReactive(obj, key, obj[key])
+                })
+            }
+        }
+
+        function defineReactive(obj, key, val) {
+            // 解决对象嵌套的问题
+            observe(val)
+            Object.defineProperty(obj, key, {
+                get() {
+                    console.log('get', val)
+                    return val
+                },
+                set(newValue) {
+                    if (val !== newValue) {
+                        // observe(val)
+                        val = newValue
+                        console.log('set', newValue)
+                    }
+
+                }
+            })
+        }
+        const obj = {
+            foo: 'foo',
+            bar: 'bar',
+            baz: {
+                a: 1
+            }
+        }
+        // defineReactive(obj, 'foo', '')
+        observe(obj)
+        obj.foo
+        obj.foo = 'foooooooooooo'
+        obj.bar
+        obj.bar = 'barrrrrrrrrrr'
+        obj.baz.a = 10 // 嵌套对象no ok
+        obj.bar = {
+            b: 10
+        }
+        obj.bar.b
+    </script>
+</body>
+
+</html>
